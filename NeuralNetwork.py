@@ -87,6 +87,16 @@ def update_params(dW1,db1,dW2,db2,dW3,db3,W1,b1,W2,b2,W3,b3,learning_rate):
     return W1,b1,W2,b2,W3,b3
 
 
+
+
+def predictions(A3):
+    return np.argmax(A3,0) 
+
+def accuracy(prediction,Y):
+    print(prediction,Y)
+    return np.sum(prediction == Y) / Y.size 
+
+
 def gradient_descent(X,Y,iterations,alpha):
     W1,b1,W2,b2,W3,b3 = init_params()
 
@@ -94,5 +104,12 @@ def gradient_descent(X,Y,iterations,alpha):
         Z1,A1,Z2,A2,Z3,A3 = forward_prop(W1,b1,W2,b2,W3,b3,X)
         dW1, db1, dW2, db2, dW3, db3 = back_prop(Z1,A1,Z2,A2,A3,W3,W2,X,Y)
         W1,b1,W2,b2,W3,b3 = update_params(dW1,db1,dW2,db2,dW3,db3,W1,b1,W2,b2,W3,b3,alpha)
+        if i % 10 == 0:
+            print("Iteration: ", i)
+            print("Accuracy: ", accuracy(predictions(A3),Y))
 
     return W1,b1,W2,b2,W3,b3
+
+
+W1,b1,W2,b2,W3,b3 = gradient_descent(X_train,Y_train,100,0.1)
+    
